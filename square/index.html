@@ -8,7 +8,7 @@
         </style>
     </head>
     <body>
-        <script src="js/three.js"></script>
+        <script src="/js/three.js"></script>
 
         <script>
 
@@ -29,7 +29,7 @@
             var geometry = new THREE.BoxGeometry(1, 1, 1);
 
             // 재질의 색상
-            var material = new THREE.MeshBasicMaterial({ color : 0xFFFFFF, wireframe: true});
+            var material = new THREE.MeshBasicMaterial({ color : 0xA0FA78, wireframe: false});
             
             // mesh(피사체)는 geometry + material로 구성된다
             var cube = new THREE.Mesh(geometry, material);
