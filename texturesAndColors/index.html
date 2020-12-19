@@ -39,10 +39,20 @@
             controls = new THREE.OrbitControls(camera, renderer.domElement);
 
             // 도형의 가로세로높이
-            var geometry = new THREE.BoxGeometry(1, 1, 1);
+            var geometry = new THREE.BoxGeometry(2, 2, 2);
+            var cubeMaterials = 
+            [
+                new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('/img/1.jpg'), side : THREE.DoubleSide}),
+                new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('/img/2.jpg'), side : THREE.DoubleSide}),
+                new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('/img/3.jpg'), side : THREE.DoubleSide}),
+                new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('/img/4.jpg'), side : THREE.DoubleSide}),
+                new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('/img/5.jpg'), side : THREE.DoubleSide}),
+                new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('/img/6.jpg'), side : THREE.DoubleSide})
+            ];
+
 
             // 재질의 색상
-            var material = new THREE.MeshBasicMaterial({ color : 0xA0FA78, wireframe: true});
+            var material = new THREE.MeshFaceMaterial(cubeMaterials);
             
             // mesh(피사체)는 geometry + material로 구성된다
             var cube = new THREE.Mesh(geometry, material);
