@@ -1,0 +1,89 @@
+<html>    
+    <head>
+        <title>Three.js Project</title>
+
+        <style>
+            body { margin: 0; }
+            canvas { width: 100%; height: 100%; }
+        </style>
+    </head>
+    <body>
+        <script src="/js/three.js"></script>
+        <script src="/js/OrbitControls.js"></script>
+        
+        <script>
+
+            // Three.js는 크게 scene, camera, renderer로 나뉜다.
+            // 카메라(camera)로 보여지는 화면(scene)을 랜더링(renderer) 해주는 방식으로 각각 영역을 나누어 세부적으로 설정 해줄 수 있다.
+            
+            // 장소를 생성해주고
+            var scene = new THREE.Scene(); 
+            // 카메라를 셋팅해준다. 매개변수(시야, 가로세로비율, 가까운정도, 먼정도)
+            var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            
+            // renderer의 사이즈를 셋팅해주고 화면에 appendChild.
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            document.body.appendChild(renderer. domElement);
+
+            // 반응형
+            window.addEventListener('resize', function(){
+                var width = window.innerWidth;
+                var height =  window.innerHeight;
+
+                renderer.setSize(width, height);
+                camera.aspect =  width / height;
+                camera.updateProjectionMatrix();
+            })
+
+            // 마우스 드래그 & 휠로 카메라 로테이션, 줌 컨트롤 하기 
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+            // 도형의 가로세로높이 box밖으로 나가지 않게하기위해 사이즈를 크게 설정
+            var geometry = new THREE.BoxGeometry(100, 100, 100);
+            var cubeMaterials = 
+            [
+                new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('/img/ft.png'), side : THREE.DoubleSide}),
+                new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('/img/bk.png'), side : THREE.DoubleSide}),
+                new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('/img/up.png'), side : THREE.DoubleSide}),
+                new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('/img/dn.png'), side : THREE.DoubleSide}),
+                new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('/img/rt.png'), side : THREE.DoubleSide}),
+                new THREE.MeshBasicMaterial({map : new THREE.TextureLoader().load('/img/lf.png'), side : THREE.DoubleSide})
+            ];
+
+            // 재질의 색상
+            var material = new THREE.MeshFaceMaterial(cubeMaterials);
+            
+            // mesh(피사체)는 geometry + material로 구성된다
+            var cube = new THREE.Mesh(geometry, material);
+
+            //scene에 mesh를 추가
+            scene.add(cube);
+
+            camera.position.z = 5;
+
+            var update = function (){
+                //cube.rotation.x += 0.01;
+                //cube.rotation.y += 0.005;
+            };
+
+            var render = function(){
+              
+                renderer.render(scene, camera);
+            };  
+
+            var GameLoop = function(){
+
+                //함수 안에서 Animation이 무한 반복되도록 requestAnimationFrame함수에 animation인자(반복할 함수)를 넣어 호출
+                requestAnimationFrame(GameLoop);
+
+                update();
+                render();
+
+            };
+
+            GameLoop();
+
+        </script>
+    </body>
+</html>
